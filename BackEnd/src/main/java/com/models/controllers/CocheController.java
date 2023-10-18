@@ -43,9 +43,5 @@ public class CocheController {
         cocheService.deleteCoche(id);
     }
     
-    @GetMapping("/crear-ejemplo")
-    public void crearCocheEjemplo() {
-        Coche cocheEjemplo = new Coche("Seat", 20000.0, "2023-01-01", false, "1234BCD", 25000.0);
-        cocheService.createCoche(cocheEjemplo);
-    }
+
 }
