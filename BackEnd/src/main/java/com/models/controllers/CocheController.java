@@ -45,7 +45,7 @@ public class CocheController {
     
     @GetMapping("/crear-ejemplo")
     public void crearCocheEjemplo() {
-        Coche cocheEjemplo = new Coche("Ejemplo", 20000.0, "2023-01-01", false, "AB123CD", 25000.0);
+        Coche cocheEjemplo = new Coche("Seat", 20000.0, "2023-01-01", false, "1234BCD", 25000.0);
         cocheService.createCoche(cocheEjemplo);
     }
 }
