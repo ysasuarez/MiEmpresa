@@ -1,11 +1,79 @@
-/* Agrega tus estilos CSS aquí */
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
-    color: #333;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
 }
 
-/* Agregar estilos adicionales según sea necesario */
+#content {
+    width: 70%; 
+    margin: 0 auto;
+    border-radius: 10px; 
+    box-shadow: 3px 3px 6px #888888;
+    overflow: hidden;
+}
+
+table {
+    width: 100%; 
+    border-collapse: collapse;
+}
+
+table th {
+    background-color: #d9d9dc; 
+    font-weight: bold;
+}
+
+table th, table td {
+    padding: 8px;
+    text-align: left;
+}
+
+table tr {
+    border-bottom: 1px solid #ccc;
+}
+
+table th:nth-child(1),
+table th:nth-child(2), 
+table th:nth-child(3), 
+table td:nth-child(1),
+table td:nth-child(2), 
+table td:nth-child(3)
+{
+    width: 40%; 
+}
+
+
+.button-details {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.button-details:hover {
+    color: #007bff;
+}
+
+.close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: transparent;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: none;
+}
+
+.coche-details {
+    position: relative;
+}
