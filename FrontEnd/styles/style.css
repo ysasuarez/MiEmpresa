@@ -1,8 +1,8 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #ededed;
     margin: 0;
-    padding: 0;
+    padding-bottom: 30px;
 }
 
 .container {
@@ -10,18 +10,83 @@ body {
     margin: 0 auto;
     padding: 1rem;
 }
-
-#content {
-    width: 70%; 
+ 
+#content{
+    width: 60%; 
     margin: 0 auto;
+}
+
+#filter-options{
+    font-size: 12px;  
+    justify-content: space-between;
+    display: flex;  
+    padding-top: 10px; 
+    padding-bottom: 10px;   
+}
+
+#date-picker-container{
+    display: flex;   
+    justify-content: center;    
+}
+
+#date-filter, #date-picker, #search-button {
+    padding: 10px;      
+    box-shadow: 3px 3px 6px #d0d0d0;
+}
+
+#date-picker:focus, #date-filter:focus {
+    outline: none;
+}
+
+#date-filter {   
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;        
+}
+
+#date-filter option {
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
+#date-picker {    
+    width: 90px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;      
+    margin-right: 3px;
+}
+
+/* Estilo personalizado para el date picker */
+.ui-datepicker-calendar {
+    table-layout: fixed; /* Asegura que todas las columnas tengan el mismo ancho */
+}
+
+.ui-datepicker-calendar th {
+    width: 2.1em; /* Ancho fijo para los encabezados de las columnas de días */
+    padding: 0.5em; /* Espaciado personalizado */
+    text-align: center; /* Alineación centrada */
+}
+
+
+#search-button {
+    border: none;
+    border-radius: 10px;
+    background-color:rgb(25, 103, 210);
+    color: #fff;
+    cursor: pointer;  
+}
+
+.coches-table {
+    width: 100%;    
     border-radius: 10px; 
     box-shadow: 3px 3px 6px #888888;
     overflow: hidden;
 }
 
-table {
-    width: 100%; 
+.coches-table {  
     border-collapse: collapse;
+    background-color: #ffffff; 
 }
 
 table th {
@@ -59,21 +124,30 @@ table td:nth-child(3)
 }
 
 .button-details:hover {
-    color: #007bff;
-}
-
-.close-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: transparent;
-    font-size: 15px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    border: none;
+    color: rgb(25, 103, 210);
 }
 
 .coche-details {
-    position: relative;
+    margin: 0 auto;
+    width: 79%;
+    background-color: white;
+    border: 1px solid #e5e5e5;
+    box-shadow: 3px 3px 6px #d0d0d0;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
+
+.details-column {
+    width: 30%; 
+    padding: 10px; 
+    text-align: left;
+}
+
+.detail-title {
+    font-weight: bold; 
+    color: #333; 
+}
+
