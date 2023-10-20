@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { title: 'Coste', value: coche.coste },
             { title: 'Fecha de Ingreso', value: coche.fechaIngreso },
             { title: 'Estado', value: coche.vendido ? 'Vendido' : 'Disponible' },
-            { title: 'Concesionario', value: 'Nombre del Concesionario' }
+            { title: 'Concesionario', value: coche.concesionario.direccion }
         ];
 
         detalles.forEach((detalle) => {

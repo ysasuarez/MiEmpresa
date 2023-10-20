@@ -127,7 +127,7 @@ table td:nth-child(3)
     color: rgb(25, 103, 210);
 }
 
-.coche-details {
+.coche-details {    
     margin: 0 auto;
     width: 79%;
     background-color: white;
@@ -141,7 +141,7 @@ table td:nth-child(3)
 }
 
 .details-column {
-    width: 30%; 
+    width: 100%; 
     padding: 10px; 
     text-align: left;
 }
