@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Definición de la codificación y metadatos de la página -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Enlace al archivo CSS local -->
     <link rel="stylesheet" href="styles/style.css">
+    <!-- Estilo de jQuery UI -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Biblioteca jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Biblioteca jQuery UI -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <title>Mi Aplicación</title>
 </head>
@@ -14,15 +19,19 @@
     
     <div id="content"> 
         <div id="filter-options">
+            <!-- Selector para filtrar coches por fecha -->
             <select id="date-filter">
                 <option value="recientes">Recientes</option>
                 <option value="antiguos">Antiguos</option>
             </select>
             <div id="date-picker-container">
+                <!-- Selector de fecha y entrada de fecha -->
                 <input type="text" id="date-picker" placeholder="Fecha">
+                <!-- Botón de búsqueda con un icono -->
                 <button id="search-button">&#128269;</button>
             </div>
         </div>       
+        <!-- Tabla que mostrará la lista de coches -->
         <table id="cochesTable" class="coches-table">
             <thead>
                 <tr>
@@ -33,10 +42,11 @@
                 </tr>
             </thead>
             <tbody id="cochesList" class="coches-list">
-                <!-- Aquí se mostrarán los coches -->
+                <!-- Esta es la sección donde se agregará dinámicamente la información de los coches -->
             </tbody>
         </table>
     </div>
+    <!-- Enlace al archivo JavaScript -->
     <script src="scripts/script.js"></script>
 </body>
 </html>

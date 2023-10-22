@@ -24,30 +24,28 @@ public class Coche {
 	private String marca;
 	private double coste;
 	private String fechaIngreso;
-	private boolean vendido;
 	private String matricula;
 	private double precioVenta;
+	private String estado;
 
 	@JsonManagedReference
 	@ManyToOne
     @JoinColumn(name = "concesionario_id")
     private Concesionario concesionario;
 
-	private String direccionConcesionario;
 
 	public Coche() {
 	}
 
-	public Coche(String marca, double coste, String fechaIngreso, boolean vendido, String matricula,
+	public Coche(String marca, double coste, String fechaIngreso, String matricula,
 			double precioVenta, Concesionario concesionario) {
 		this.marca = marca;
 		this.coste = coste;
 		this.fechaIngreso = fechaIngreso;
-		this.vendido = vendido;
 		this.matricula = matricula;
 		this.precioVenta = precioVenta;
-		direccionConcesionario = concesionario.getDireccion();
 		this.concesionario = concesionario;
+		this.estado = "Disponible";
 	}
 
 }

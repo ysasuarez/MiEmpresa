@@ -1,3 +1,4 @@
+/* Estilos generales de la página */
 body {
     font-family: Arial, sans-serif;
     background-color: #ededed;
@@ -5,92 +6,105 @@ body {
     padding-bottom: 30px;
 }
 
+/* Estilos del contenedor principal */
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 1rem;
 }
- 
-#content{
-    width: 60%; 
+
+/* Estilos del contenido principal */
+#content {
+    width: 60%;
     margin: 0 auto;
 }
 
-#filter-options{
-    font-size: 12px;  
+/* Estilos para el filtro de opciones */
+#filter-options {
+    font-size: 12px;
     justify-content: space-between;
-    display: flex;  
-    padding-top: 10px; 
-    padding-bottom: 10px;   
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
-#date-picker-container{
-    display: flex;   
-    justify-content: center;    
+/* Estilos para el contenedor del selector de fecha */
+#date-picker-container {
+    display: flex;
+    justify-content: center;
 }
 
+/* Estilos para los elementos del filtro de fecha y botón de búsqueda */
 #date-filter, #date-picker, #search-button {
-    padding: 10px;      
+    padding: 10px;
     box-shadow: 3px 3px 6px #d0d0d0;
 }
 
+/* Estilos de enfoque para el selector de fecha y filtro de fecha */
 #date-picker:focus, #date-filter:focus {
     outline: none;
 }
 
-#date-filter {   
+/* Estilos del filtro de fecha */
+#date-filter {
     border: 1px solid #ccc;
     border-radius: 10px;
-    background-color: white;        
+    background-color: white;
 }
 
+/* Estilos para las opciones del selector de fecha */
 #date-filter option {
     border: 1px solid #ccc;
     background-color: white;
 }
 
-#date-picker {    
+/* Estilos del selector de fecha */
+#date-picker {
     width: 90px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    background-color: white;      
+    background-color: white;
     margin-right: 3px;
 }
 
-/* Estilo personalizado para el date picker */
+/* Estilos personalizados para el date picker */
 .ui-datepicker-calendar {
-    table-layout: fixed; /* Asegura que todas las columnas tengan el mismo ancho */
+    table-layout: fixed; 
 }
 
+/* Estilos para los encabezados de las columnas de días en el date picker */
 .ui-datepicker-calendar th {
     width: 2.1em; /* Ancho fijo para los encabezados de las columnas de días */
     padding: 0.5em; /* Espaciado personalizado */
     text-align: center; /* Alineación centrada */
 }
 
-
+/* Estilos para el botón de búsqueda */
 #search-button {
     border: none;
     border-radius: 10px;
-    background-color:rgb(25, 103, 210);
+    background-color: rgb(25, 103, 210);
     color: #fff;
-    cursor: pointer;  
+    cursor: pointer;
 }
 
+/* Estilos de la tabla de coches */
 .coches-table {
-    width: 100%;    
-    border-radius: 10px; 
+    width: 100%;
+    border-radius: 10px;
     box-shadow: 3px 3px 6px #888888;
     overflow: hidden;
 }
 
-.coches-table {  
+/* Estilos de la tabla de coches, bordes y fondo */
+.coches-table {
     border-collapse: collapse;
-    background-color: #ffffff; 
+    background-color: #ffffff;
 }
 
+/* Estilos para encabezados y celdas de la tabla */
 table th {
-    background-color: #d9d9dc; 
+    background-color: #d9d9dc;
     font-weight: bold;
 }
 
@@ -103,17 +117,17 @@ table tr {
     border-bottom: 1px solid #ccc;
 }
 
+/* Establece anchos específicos para ciertas columnas de la tabla */
 table th:nth-child(1),
-table th:nth-child(2), 
-table th:nth-child(3), 
+table th:nth-child(2),
+table th:nth-child(3),
 table td:nth-child(1),
-table td:nth-child(2), 
-table td:nth-child(3)
-{
-    width: 40%; 
+table td:nth-child(2),
+table td:nth-child(3) {
+    width: 40%;
 }
 
-
+/* Estilos para el botón de detalles */
 .button-details {
     background-color: transparent;
     border: none;
@@ -123,11 +137,13 @@ table td:nth-child(3)
     align-items: center;
 }
 
+/* Estilos en el estado de "hover" para el botón de detalles */
 .button-details:hover {
     color: rgb(25, 103, 210);
 }
 
-.coche-details {    
+/* Estilos para el contenedor de detalles del coche */
+.coche-details {
     margin: 0 auto;
     width: 79%;
     background-color: white;
@@ -140,14 +156,58 @@ table td:nth-child(3)
     justify-content: space-between;
 }
 
+/* Estilos para la columna de detalles en pantalla completa */
+.details-left {
+    width: 75%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/* Restaura el estilo de una sola columna para pantallas más pequeñas */
+@media (max-width: 900px) {
+    .details-left {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Estilos para la columna de detalles a la derecha */
+.details-right {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Estilos para las columnas de detalles */
 .details-column {
-    width: 100%; 
-    padding: 10px; 
+    width: 100%;
+    padding: 10px;
     text-align: left;
 }
 
+/* Estilos para el título del detalle */
 .detail-title {
-    font-weight: bold; 
-    color: #333; 
+    font-weight: bold;
+    color: #333;
 }
 
+/* Estilos para los botones "Vender" y "Dar de Baja" */
+.button-vender,
+.button-baja {
+    width: 80px;
+    background-color: rgb(25, 103, 210);
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 13px;
+}
+
+/* Estilos en el estado de "hover" para los botones y botón de búsqueda */
+.button-vender:hover,
+.button-baja:hover,
+#search-button:hover {
+    background-color: #318cdd;
+}

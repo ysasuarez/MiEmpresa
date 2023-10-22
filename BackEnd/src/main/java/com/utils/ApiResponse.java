@@ -1,5 +1,9 @@
 package com.utils;
 
+/*
+ * clase de utilidad diseñada para encapsular las respuestas 
+ * de la API en tu aplicación.
+ */
 public class ApiResponse<T> {
     private boolean success;
     private String message;

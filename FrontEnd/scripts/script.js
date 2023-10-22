@@ -2,12 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const cochesList = document.querySelector(".coches-list");
     const dateFilter = document.getElementById("date-filter");
     let cochesData = [];
-    let isSortedRecent = true; // Variable para rastrear el estado de orden.
+    let isSortedRecent = true; 
 
     loadCoches();
 
     // Función para cargar los coches y mostrarlos.
     function loadCoches() {
+        dateFilter.value = 'recientes';
+
         fetch("http://localhost:8080/coches")
             .then((response) => {
                 if (response.ok) {
@@ -17,7 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             })
             .then((data) => {
-                cochesData = data; // Almacenar los datos de los coches.
+                // Almacenar los datos de los coches.
+                cochesData = data; 
                 renderCoches(data);
             })
             .catch((error) => {
@@ -27,13 +30,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Función para renderizar los coches en la tabla.
     function renderCoches(coches) {
-        cochesList.innerHTML = ""; // Limpiar la tabla antes de mostrar los datos.
+        cochesList.innerHTML = ""; 
 
-        coches.forEach((coche, index) => {
+        coches.forEach((coche) => {
             const row = cochesList.insertRow();
             row.insertCell(0).textContent = coche.marca;
             row.insertCell(1).textContent = coche.matricula;
-            row.insertCell(2).textContent = coche.precioVenta;
+            
+            const precioCell = row.insertCell(2);
+            precioCell.textContent = coche.precioVenta;
+            precioCell.addEventListener('dblclick', () => {
+                if(coche.estado == 'Disponible'){
+                    makePriceEditable(precioCell, coche);
+                }
+                
+            });
+
             const actionsCell = row.insertCell(3);
             const detailsButton = document.createElement('button');
             detailsButton.className = 'button-details';
@@ -42,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (detailsButton.textContent == '+') {
                     showDetails(coche, detailsButton, row);
                 } else if (detailsButton.textContent == '-') {
-                    closeDetails(row.nextElementSibling, detailsButton);
+                    closeDetails(row.nextElementSibling, detailsButton, coches);
                 }
             });
             actionsCell.appendChild(detailsButton);
@@ -60,13 +72,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const detailsContainer = document.createElement('div');
         detailsContainer.className = 'coche-details';
 
+         // Crear una columna para los detalles en la parte izquierda.
+        const detailsLeft = document.createElement('div');
+        detailsLeft.className = 'details-left';
+
         const detalles = [
             { title: 'ID', value: coche.id },
             { title: 'Coste', value: coche.coste },
             { title: 'Fecha de Ingreso', value: coche.fechaIngreso },
-            { title: 'Estado', value: coche.vendido ? 'Vendido' : 'Disponible' },
+            { title: 'Estado', value: coche.estado},
             { title: 'Concesionario', value: coche.concesionario.direccion }
         ];
+
+        let valueDivEstado;
 
         detalles.forEach((detalle) => {
             const detailDiv = document.createElement('div');
@@ -80,19 +98,116 @@ document.addEventListener("DOMContentLoaded", () => {
             valueDiv.className = 'detail-value';
             valueDiv.textContent = detalle.value;
 
+            if (detalle.title == 'Estado') {
+                valueDivEstado = valueDiv; 
+            }
+
             detailDiv.appendChild(titleDiv);
             detailDiv.appendChild(valueDiv);
 
-            detailsContainer.appendChild(detailDiv);
+            detailsLeft.appendChild(detailDiv);
         });
 
+        // Crear una columna para los botones en la parte derecha.
+        const detailsRight = document.createElement('div');
+        detailsRight.className = 'details-right';
+
+        const venderButton = document.createElement('button');
+        venderButton.className = 'button-vender';
+        venderButton.textContent = 'Vender';
+        venderButton.addEventListener('click', () => {        
+                marcarVendido(coche);                          
+        });
+
+        const bajaAltaButton = document.createElement('button');
+        bajaAltaButton.className = 'button-baja';  
+
+        // Funcionamiento boton dinamico para dar de baja o alta.
+        if (coche.estado == 'No Disponible') {
+            bajaAltaButton.textContent = 'Alta';
+            bajaAltaButton.addEventListener('click', () => {
+                darDeAlta(coche);              
+            });
+        } else {
+            bajaAltaButton.textContent = 'Baja';
+            bajaAltaButton.addEventListener('click', () => {
+                darDeBaja(coche);                
+            });
+        }
+        
+        detailsRight.appendChild(venderButton);
+        detailsRight.appendChild(bajaAltaButton);
+    
+        // Agregar las columnas izquierda y derecha al recuadro de detalles.
+        detailsContainer.appendChild(detailsLeft);
+        detailsContainer.appendChild(detailsRight);
+    
         detailsCell.appendChild(detailsContainer);
+   
+}
+
+    // Funcion para cambiar el estado de un coche a vendido, 
+    // solo se podra vender un coche disponible.
+    function marcarVendido(coche){
+        if (coche.estado == 'Disponible') {
+            // Enviar solicitud para marcar como vendido.
+            fetch(`http://localhost:8080/coches/marcar-como-vendido/${coche.id}`, {
+                method: 'PUT',
+                })
+                .then(response => {
+                    if (response.ok) {  
+                        loadCoches();                
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al marcar como vendido:', error);
+                });
+            }           
     }
+
+    // Función para dar de baja un coche, 
+    // solo se podrá dar de baja un coche disponible.
+    function darDeBaja(coche) {
+        if (coche.estado == 'Disponible') {
+            // Enviar solicitud para dar de baja.
+            fetch(`http://localhost:8080/coches/dar-de-baja/${coche.id}`, {
+                method: 'PUT',
+            })
+                .then(response => {
+                    if (response.ok) {
+                        loadCoches();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al dar de baja:', error);
+                });
+        }       
+    }
+
+    // Función para dar de alta un coche, 
+    // solo se podrá dar de baja un coche no disponible.
+    function darDeAlta(coche) {
+        if (coche.estado == 'No Disponible') {
+            // Enviar solicitud para dar de baja
+            fetch(`http://localhost:8080/coches/dar-de-alta/${coche.id}`, {
+                method: 'PUT',
+            })
+                .then(response => {
+                    if (response.ok) {
+                        loadCoches();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al dar de baja:', error);
+                });
+        }       
+    }
+
 
     // Función para cerrar los detalles de un coche.
     function closeDetails(detailsRow, detailsButton) {
         detailsRow.remove();
-        detailsButton.textContent = '+';
+        detailsButton.textContent = '+';       
     }
 
     // Función para ordenar los coches por fecha.
@@ -102,13 +217,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Evento para detectar cambios en el filtro de fecha.
     dateFilter.addEventListener('change', () => {
-        if (dateFilter.value === 'recientes') {
+        if (dateFilter.value == 'recientes') {
             if (!isSortedRecent) {
                 sortCochesByDate();
                 isSortedRecent = true;
             }
             renderCoches(cochesData);
-        } else if (dateFilter.value === 'antiguos') {
+        } else if (dateFilter.value == 'antiguos') {
             if (isSortedRecent) {
                 sortCochesByDate();
                 cochesData.reverse();
@@ -118,8 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-   
-
+    // Utils Calendario.
     $(function () {
         $("#date-picker").datepicker({
             dateFormat: "yy-mm-dd" 
@@ -134,17 +248,71 @@ document.addEventListener("DOMContentLoaded", () => {
         searchCoches();
     });
 
-
+    // Funcion para buscar coches según la fecha señalada en el calendario.
     function searchCoches() {
         const selectedDate = $("#date-picker").val().trim();
-        if (selectedDate === "" || selectedDate.length < 10) {
-            // Si el campo de fecha está vacío o tiene una longitud incorrecta, muestra todos los coches
+        if (selectedDate == "" || selectedDate.length < 10) {
+            // Si el campo de fecha está vacío o tiene una longitud incorrecta,
+            // muestra todos los coches.
             renderCoches(cochesData);
         } else {
             const formattedDate = $.datepicker.formatDate('yy-mm-dd', new Date(selectedDate));
-            // Filtrar los coches por la fecha seleccionada
-            const filteredCoches = cochesData.filter(coche => coche.fechaIngreso === formattedDate);
+            // Filtrar los coches por la fecha seleccionada.
+            const filteredCoches = cochesData.filter(coche => coche.fechaIngreso == formattedDate);
             renderCoches(filteredCoches);
         }
     }
+
+    // Función para poder editar el precio de venta de los coches.
+    function makePriceEditable(cell, coche) {
+        cell.textContent = '';
+    
+        const precioInput = document.createElement('input');
+        precioInput.className = 'editable-price';
+        precioInput.type = 'text';
+        precioInput.value = coche.precioVenta;
+        cell.appendChild(precioInput);
+    
+    
+        precioInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                const inputText = precioInput.value;
+                // Comprobamos que sea válido.
+                if (/^[0-9.]+$/.test(inputText)) {
+                    const newPrice = parseFloat(inputText);                    
+                    if (!isNaN(newPrice)) {
+                        savePrice(coche, newPrice);
+                    } else {
+                        alert('El valor introducido no es un número válido.');
+                    }
+                } else {
+                    alert('El valor introducido contiene caracteres no válidos.');
+                }
+            } else if (event.key === 'Escape') {
+                loadCoches();
+            }
+        });
+    
+        precioInput.focus();
+    }
+
+    // Función para guardar el nuevo precio de venta de un coche
+    function savePrice(coche, newPriceToSave) {
+        // Enviar una solicitud para actualizar el precio
+        fetch(`http://localhost:8080/coches/editar-precio/${coche.id}?newPrice=${newPriceToSave}`, {
+            method: 'PUT',           
+        })
+        .then((response) => {
+            if (response.ok) {
+                loadCoches();          
+            } else {        
+                console.error('Error al actualizar el precio:', response.status);
+            }
+        })
+        .catch((error) => {
+            console.error('Error al actualizar el precio:', error);
+        });
+        
+    }
+
 });
